@@ -1,0 +1,1 @@
+web: gunicorn panda_server.wsgi --log-file -
