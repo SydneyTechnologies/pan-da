@@ -1,4 +1,8 @@
+from operator import mod
 import threading
+from types import new_class
+
+from panda.models import Panda
 from . watchable import Watchable
 from . pandaSearch import getDownloadLink, startSearch
 
@@ -28,4 +32,6 @@ class CustomProcessThread(threading.Thread):
         item = Watchable("", "https://tfpdl.se/" + self.link, "", "")
         print(item.getLink())
         self.result = getDownloadLink(item)
-        return self.result
+        new_panda = Panda(search=self.link,
+                          download_link=self.result.getDownloadLink())
+        new_panda.save()

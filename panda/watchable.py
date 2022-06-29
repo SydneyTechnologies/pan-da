@@ -14,5 +14,8 @@ class Watchable():
     def getLink(self):
         return self.link
 
+    def getDownloadLink(self):
+        return self.downloadLink
+
     def updateDownloadLink(self, download_link):
         self.downloadLink = download_link

@@ -1,3 +1,4 @@
+from ast import expr_context
 from . watchable import Watchable
 import re
 # a custom class that holds the search results, the links, images and description
@@ -22,9 +23,10 @@ chrome_options = Options()
 prefs = {"profile.managed_default_content_settings.images": 2}
 # to run the selenium driver efficiently, we need to set some options
 chrome_options.add_argument("--silent")
-chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--headless")
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-chrome_options.add_extension('C:\\Users\\sydne\\Desktop\\panda\\ublock.crx')
+EXTENSION_PATH = "https://drive.google.com/file/d/1x9lgPLHtkvWVWNCpmWSx61Bu8JqV7TYG/view?usp=sharing"
+# chrome_options.add_extension(EXTENSION_PATH)
 #chrome_options.add_experimental_option("prefs", prefs)
 # the target url is tfpdl.is
 search = "doctor strange 2022"
@@ -44,6 +46,22 @@ def startSearch(search):
     else:
         results = searchResultPage.soup.find_all("article")
         return ExtractSearchAsWatchable(results)
+
+
+def removeAds(browser):
+    all_iframes = browser.find_elements(By.NAME, "iframe")
+    if len(all_iframes) > 0:
+        print("Ad Found\n")
+        browser.execute_script("""
+        var elems = document.getElementsByTagName("iframe"); 
+        for(var i = 0, max = elems.length; i < max; i++)
+             {
+                 elems[i].hidden=true;
+             }
+                          """)
+        print('Total Ads: ' + str(len(all_iframes)))
+    else:
+        print('No frames found')
 
 
 def Start():
@@ -83,6 +101,7 @@ def getDownloadLink(watchable):
     driver = webdriver.Chrome(options=chrome_options,
                               service=Service(ChromeDriverManager().install()))
     driver.get(link)
+    # removeAds(driver)
     # we have to find the first element which is an image tag
     # with an onclick event attached to it
     wait = WebDriverWait(driver, 15)
@@ -103,10 +122,15 @@ def getDownloadLink(watchable):
     image_button_three.click()
     driver.switch_to.window(driver.window_handles[1])
     # now we must check if the website has a input field
-    password_field = wait.until(findElement(By.XPATH, '//*[@id="password"]'))
-    password_field.send_keys("tfpdl")
-    submit_button = wait.until(findElement(By.XPATH, '//*[@id="passwordBtn"]'))
-    submit_button.submit()
+    try:
+        password_field = wait.until(
+            findElement(By.XPATH, '//*[@id="password"]'))
+        password_field.send_keys("tfpdl")
+        submit_button = wait.until(findElement(
+            By.XPATH, '//*[@id="passwordBtn"]'))
+        submit_button.submit()
+    except:
+        print('there was no password here')
     download_link_tag = wait.until(
         findElement(By.XPATH, '//*[@id="pre"]/a[1]'))
     driver.get(download_link_tag.get_attribute('href'))
