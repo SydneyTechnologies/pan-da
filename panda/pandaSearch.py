@@ -23,7 +23,9 @@ chrome_options = Options()
 prefs = {"profile.managed_default_content_settings.images": 2}
 # to run the selenium driver efficiently, we need to set some options
 chrome_options.add_argument("--silent")
-# chrome_options.add_argument("--headless")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage') 
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 #EXTENSION_PATH = "https://drive.google.com/file/d/1x9lgPLHtkvWVWNCpmWSx61Bu8JqV7TYG/view?usp=sharing"
 # chrome_options.add_extension(EXTENSION_PATH)
