@@ -31,7 +31,9 @@ def getMovie(request, link):
     download_thread = CustomProcessThread(link=link)
     download_thread.setDaemon(True)
     download_thread.start()
-    return Response({"status": "download link in progress"})
+    download_thread.join()
+    return Response({"download-link": download_thread.result.getDownloadLink()})
+    # return Response({"status": "download link in progress"})
 
 
 @api_view(['GET'])
