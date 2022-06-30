@@ -1,12 +1,13 @@
 class Watchable():
     # this is a class that contains all the necessary
     # information needed to continue the search and download process
-    def __init__(self, title, link, description, image):
+    def __init__(self, title, link, description, image, identifier):
         self.title = str(title)
         self.link = link
         self.description = description
         self.image = image
         self.downloadLink = ''
+        self.identifier = identifier
 
     def __str__(self) -> str:
         return self.title

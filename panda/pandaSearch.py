@@ -25,7 +25,7 @@ prefs = {"profile.managed_default_content_settings.images": 2}
 chrome_options.add_argument("--silent")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage') 
+chrome_options.add_argument('--disable-dev-shm-usage')
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 #EXTENSION_PATH = "https://drive.google.com/file/d/1x9lgPLHtkvWVWNCpmWSx61Bu8JqV7TYG/view?usp=sharing"
 # chrome_options.add_extension(EXTENSION_PATH)
@@ -77,6 +77,11 @@ def Start():
         getDownloadLink(ExtractSearchAsWatchable(results)[0])
 
 
+def getIdentifier(full_path):
+    shortend_path = full_path.replace("https://tfpdl.se/", "")
+    return shortend_path.replace("/", "")
+
+
 def ExtractSearchAsWatchable(Articles):
     # this is a method that is responsible for
     # creating new watchable items
@@ -88,7 +93,9 @@ def ExtractSearchAsWatchable(Articles):
         link = link_tag["href"]
         image = article.find("img")["src"]
         description = article.find("br").contents
-        searchResultItem = Watchable(title, link, description, image)
+        identifier = getIdentifier(link)
+        searchResultItem = Watchable(
+            title=title, link=link, description=description, image=image, identifier=identifier)
         watchableList.append(searchResultItem)
     return watchableList
 

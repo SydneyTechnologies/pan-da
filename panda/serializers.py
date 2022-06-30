@@ -6,3 +6,4 @@ class WatchableSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=500)
     image = serializers.CharField(max_length=200)
     downloadLink = serializers.CharField(max_length=200)
+    identifier = serializers.CharField(max_length=200)
