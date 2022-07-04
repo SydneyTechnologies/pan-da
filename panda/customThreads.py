@@ -29,7 +29,7 @@ class CustomProcessThread(threading.Thread):
         self.result = False
 
     def run(self):
-        item = Watchable("", "https://tfpdl.se/" + self.link, "", "")
+        item = Watchable("", "https://tfpdl.se/" + self.link, "", "", "")
         print(item.getLink())
         self.result = getDownloadLink(item)
         temp_panda = Panda.objects.get(search=self.link)
