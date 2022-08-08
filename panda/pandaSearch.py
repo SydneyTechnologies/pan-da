@@ -24,7 +24,7 @@ prefs = {"profile.managed_default_content_settings.images": 2}
 # to run the selenium driver efficiently, we need to set some options
 chrome_options.add_argument("--silent")
 chrome_options.add_argument("--headless")
-chrome_options.add_argument('--no-sandbox')
+# chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 #EXTENSION_PATH = "https://drive.google.com/file/d/1x9lgPLHtkvWVWNCpmWSx61Bu8JqV7TYG/view?usp=sharing"
@@ -48,22 +48,6 @@ def startSearch(search):
     else:
         results = searchResultPage.soup.find_all("article")
         return ExtractSearchAsWatchable(results)
-
-
-def removeAds(browser):
-    all_iframes = browser.find_elements(By.NAME, "iframe")
-    if len(all_iframes) > 0:
-        print("Ad Found\n")
-        browser.execute_script("""
-        var elems = document.getElementsByTagName("iframe"); 
-        for(var i = 0, max = elems.length; i < max; i++)
-             {
-                 elems[i].hidden=true;
-             }
-                          """)
-        print('Total Ads: ' + str(len(all_iframes)))
-    else:
-        print('No frames found')
 
 
 def Start():
@@ -103,14 +87,15 @@ def ExtractSearchAsWatchable(Articles):
 def getDownloadLink(watchable):
     page_two = browser.get(watchable.getLink()).soup
     download_div = page_two.find("div", attrs={"class": "entry"})
-    link = download_div.find(
-        "a", attrs={"target": "_blank", "class": "button"})["href"]
+    # link = download_div.find(
+    #     "a", attrs={"target": "_blank", "class": "button"})["href"]
+    link = download_div.find_all("a", attrs={"target": "_blank"})[1]["href"]
+    print("this is the link", link)
     # at this point there is a form we need to submit
     # but the submission code requires javascript to be used
     driver = webdriver.Chrome(options=chrome_options,
                               service=Service(ChromeDriverManager().install()))
     driver.get(link)
-    # removeAds(driver)
     # we have to find the first element which is an image tag
     # with an onclick event attached to it
     wait = WebDriverWait(driver, 15)
@@ -140,6 +125,7 @@ def getDownloadLink(watchable):
         submit_button.submit()
     except:
         print('there was no password here')
+
     download_link_tag = wait.until(
         findElement(By.XPATH, '//*[@id="pre"]/a[1]'))
     driver.get(download_link_tag.get_attribute('href'))
@@ -195,7 +181,3 @@ def findElement(by, path):
     # it is called repeatedly until the element is found
     # however if the timeout is exceeded then the recursion stops
     return EC.element_to_be_clickable((by, path))
-
-
-# Start()
-# driver.quit()

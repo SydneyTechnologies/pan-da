@@ -1,10 +1,8 @@
-from unittest import result
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from . serializers import WatchableSerializer
-from rest_framework.renderers import JSONRenderer
 from . customThreads import *
-from . models import Panda
+
 # Create your views here.
 
 
@@ -20,7 +18,7 @@ def searchMovie(request, search):
     watchables = thread.result
     if watchables != False:
         serializer = WatchableSerializer(watchables, many=True)
-        return Response(JSONRenderer().render(serializer.data))
+        return Response(serializer.data)
     else:
         return Response({"status": "no results found"})
 
@@ -36,9 +34,3 @@ def getMovie(request, link):
         return Response({"download-link": download_thread.result.getDownloadLink()})
     else:
         return Response({"status": "download link in progress"})
-
-
-@api_view(['GET'])
-def getResult(request, link):
-    result_value = Panda.objects.all().get(search=link)
-    return Response({"download-link": result_value.download_link})
