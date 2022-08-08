@@ -1,7 +1,4 @@
 import threading
-
-
-from panda.models import Panda
 from . watchable import Watchable
 from . pandaSearch import getDownloadLink, startSearch
 

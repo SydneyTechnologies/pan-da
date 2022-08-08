@@ -1,4 +1,3 @@
-from ast import expr_context
 from . watchable import Watchable
 import re
 # a custom class that holds the search results, the links, images and description
