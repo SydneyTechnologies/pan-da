@@ -75,7 +75,7 @@ def ExtractSearchAsWatchable(Articles):
         title = link_tag.contents
         link = link_tag["href"]
         image = article.find("img")["src"]
-        description = article.find("br").contents
+        description = article.text.replace("\nRead More »", "")
         identifier = getIdentifier(link)
         searchResultItem = Watchable(
             title=title, link=link, description=description, image=image, identifier=identifier)
@@ -89,7 +89,6 @@ def getDownloadLink(watchable):
     # link = download_div.find(
     #     "a", attrs={"target": "_blank", "class": "button"})["href"]
     link = download_div.find_all("a", attrs={"target": "_blank"})[1]["href"]
-    print("this is the link", link)
     # at this point there is a form we need to submit
     # but the submission code requires javascript to be used
     driver = webdriver.Chrome(options=chrome_options,
