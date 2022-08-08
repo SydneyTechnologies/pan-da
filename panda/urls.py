@@ -1,5 +1,5 @@
 from django.urls import path
-from . views import getResult, searchMovie, getMovie
+from . views import searchMovie, getMovie
 
 urlpatterns = [
     path('search/<str:search>', view=searchMovie, name="search"),
