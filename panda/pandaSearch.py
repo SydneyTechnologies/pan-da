@@ -72,7 +72,7 @@ def ExtractSearchAsWatchable(Articles):
     for article in Articles:
         link_tag = article.find("h2").find("a")
         print(link_tag)
-        title = link_tag.contents
+        title = link_tag.contents[0].replace("TFPDL-", "")
         link = link_tag["href"]
         image = article.find("img")["src"]
         description = article.text.replace("\nRead More »", "")
