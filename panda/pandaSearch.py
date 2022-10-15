@@ -134,7 +134,7 @@ def getDownloadLink(watchable):
     entry_captcha.submit()
     download_button = wait.until(findElement(
         By.XPATH, '//*[@id="downloadbtn"]'))
-    regex_pattern = r"https:\/\/.*?"
+    regex_pattern = r"https:\/\/.*?'"
     onclick_text = download_button.get_attribute('onclick')
     download_link = re.search(
         regex_pattern, onclick_text, re.MULTILINE).group()
