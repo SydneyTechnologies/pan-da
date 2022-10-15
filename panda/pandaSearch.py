@@ -139,7 +139,7 @@ def getDownloadLink(watchable):
     download_link = re.search(
         regex_pattern, onclick_text, re.MULTILINE).group()
     print(download_link)
-    watchable.updateDownloadLink(str(download_link).remove)
+    watchable.updateDownloadLink(str(download_link))
     driver.quit()
     return watchable
 
