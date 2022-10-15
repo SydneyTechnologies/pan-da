@@ -8,6 +8,10 @@ def GetMovieInfo(MovieDetails):
     return [title, movie_details]
 
 def GetDescription(description):
-    rdescript = r'\\n\\n[A-Z].*\.'
-    result = re.search(rdescript, description).group()
-    return result
+    rdescript = r'\\n\\n[A-Z].*'
+    result = re.search(rdescript, description)
+    if result:
+        result = result.group()
+        return result.replace("\n", "")
+    else:
+        return description
