@@ -1,6 +1,6 @@
 import re
 from . watchable import Watchable
-from .utils import GetMovieInfo, getVideoSpecification
+from .utils import GetMovieInfo
 # a custom class that holds the search results, the links, images and description
 # gotten from a movie or series search
 import mechanicalsoup
