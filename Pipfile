@@ -42,6 +42,7 @@ tzdata = "==2022.1"
 urllib3 = "==1.26.9"
 webdriver-manager = "==3.7.0"
 wsproto = "==1.1.0"
+django-rest-knox = "*"
 
 [dev-packages]
 

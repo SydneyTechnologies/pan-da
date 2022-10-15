@@ -1,7 +1,9 @@
 from django.urls import path
-from . views import searchMovie, getMovie
+from . views import searchMovie, getMovie, LoginView, CreateUserView
 
 urlpatterns = [
-    path('search/<str:search>', view=searchMovie, name="search"),
-    path('get/<str:link>', view=getMovie, name="get"),
+    path('signup', view = CreateUserView.as_view(), name ="create"),
+    path('login', view = LoginView.as_view(), name="login"),
+    path('search/<str:search>', view = searchMovie, name="search"),
+    path('get/<str:link>', view = getMovie, name="get"),
 ]

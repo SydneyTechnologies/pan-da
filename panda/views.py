@@ -1,12 +1,48 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from . serializers import WatchableSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.views import APIView
+from . serializers import WatchableSerializer, UserSerializer
+from django.contrib.auth import authenticate
 from . customThreads import *
+from knox.models import AuthToken
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 
+# authentication views
+class CreateUserView(APIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        username = request.data["username"]
+        password = request.data["password"]
+        user = User.objects.create_user(username=username, password=password, email="")
+        return Response({
+            "Token": AuthToken.objects.create(user)[1]
+        })
+
+class LoginView(APIView):
+    # this view will allow us to get our token
+    # by sending our a POST request
+    # the users credentials like a username and password 
+    serializer_class = UserSerializer
+    def post(self, request):
+        username = request.data["username"]
+        password = request.data["password"]
+        user = authenticate(username=username, password=password)
+        if user is None:
+            return Response({"Info":" Invalid credentials"})
+        return Response({
+            "Token": AuthToken.objects.create(user)[1]
+        })
+
+
+
+
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 # here we decorate the view as an api that only perform http get operations
 def searchMovie(request, search):
     # this is a view that will start the search for the movie in
@@ -24,6 +60,7 @@ def searchMovie(request, search):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getMovie(request, link):
 
     download_thread = CustomProcessThread(link=link)

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 
 
 class WatchableSerializer(serializers.Serializer):
@@ -10,3 +11,11 @@ class WatchableSerializer(serializers.Serializer):
     image = serializers.CharField(max_length=200)
     downloadLink = serializers.CharField(max_length=200)
     identifier = serializers.CharField(max_length=200)
+
+
+
+...
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ["username", "password"]
