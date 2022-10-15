@@ -1,5 +1,6 @@
-from . watchable import Watchable
 import re
+from . watchable import Watchable
+from .utils import getVideoSpecification
 # a custom class that holds the search results, the links, images and description
 # gotten from a movie or series search
 import mechanicalsoup
@@ -71,14 +72,14 @@ def ExtractSearchAsWatchable(Articles):
     watchableList = []
     for article in Articles:
         link_tag = article.find("h2").find("a")
-        print(link_tag)
-        title = link_tag.contents[0].replace("TFPDL-", "")
+        article_info = link_tag.contents[0].replace("-TFPDL", "")
+        title, video_spec = getVideoSpecification(article_info)
         link = link_tag["href"]
         image = article.find("img")["src"]
         description = article.text.replace("\nRead More »", "")
         identifier = getIdentifier(link)
         searchResultItem = Watchable(
-            title=title, link=link, description=description, image=image, identifier=identifier)
+            title=title, link=link, description=description, image=image, identifier=identifier, video_spec=video_spec)
         watchableList.append(searchResultItem)
     return watchableList
 
