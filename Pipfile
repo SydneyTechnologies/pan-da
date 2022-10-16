@@ -21,7 +21,6 @@ gunicorn = "==20.1.0"
 h11 = "==0.13.0"
 idna = "==3.3"
 lxml = "==4.9.0"
-mechanicalsoup = "==1.1.0"
 outcome = "==1.2.0"
 pycodestyle = "==2.8.0"
 pycparser = "==2.21"
@@ -48,6 +47,7 @@ python-decouple = "*"
 whitenoise = "*"
 ndg-httpsclient = "*"
 pyasn1 = "*"
+mechanicalsoup = "==0.12"
 
 [dev-packages]
 

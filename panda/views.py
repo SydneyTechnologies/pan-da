@@ -42,7 +42,7 @@ class LoginView(APIView):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 # here we decorate the view as an api that only perform http get operations
 def searchMovie(request, search):
     # this is a view that will start the search for the movie in

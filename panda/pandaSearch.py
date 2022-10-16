@@ -35,14 +35,16 @@ search = "doctor strange 2022"
 URL = "https://tfpdl.se/?s="+search
 # the browser is a class provided by mechanical soup that would allow for requests to be
 # made through python code, however it is unable to do javascript operations
-browser = mechanicalsoup.StatefulBrowser()
-page = browser.get(URL)
+browser = mechanicalsoup.StatefulBrowser(
+    user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
+)
+page = browser.open(URL)
 # the page is the object that contains the website result for the given search
 
 
 def startSearch(search):
     URL = "https://tfpdl.se/?s="+search
-    searchResultPage = browser.get(URL)
+    searchResultPage = browser.open(URL)
     if searchResultPage.status_code != 200:
         return False
     else:
