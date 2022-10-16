@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-
+from . models import Links
 
 class WatchableSerializer(serializers.Serializer):
     # serializes the python class watchable to display into json
@@ -19,3 +19,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ["username", "password"]
+
+
+
+class LinkSerializer(serializers.Serializer):
+    class Meta:
+        model = Links
+        fields = ["original_link"]
+    

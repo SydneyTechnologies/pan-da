@@ -7,6 +7,12 @@ from . customThreads import *
 from knox.models import AuthToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
+from . models import Links
+from . utils import generateHash
+from rest_framework.generics import RetrieveAPIView
+from . serializers import LinkSerializer
+from django.shortcuts import redirect
+
 
 # Create your views here.
 
@@ -60,7 +66,7 @@ def searchMovie(request, search):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def getMovie(request, link):
 
     download_thread = CustomProcessThread(link=link)
@@ -68,6 +74,22 @@ def getMovie(request, link):
     download_thread.start()
     download_thread.join()
     if download_thread.result != False:
-        return Response({"download-link": download_thread.result.getDownloadLink()})
+        hash_id = ShortenLink(download_thread.result)
+        return redirect("video", hash=hash_id)
+        #Response({"download-link": download_thread.result.getDownloadLink()})
     else:
         return Response({"status": "download link in progress"})
+
+
+# Create your views here.
+def ShortenLink(link):
+    original_link = link
+    link_hash = generateHash()
+    Link = Links.objects.create(original_link, link_hash)
+    return link_hash
+
+class RetrieveLinkView(RetrieveAPIView):
+    queryset = Links.objects.all()
+    lookup_url_kwarg = "hash"
+    serializer_class = LinkSerializer
+

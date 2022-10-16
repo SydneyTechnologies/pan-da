@@ -1,4 +1,6 @@
 import re
+import random
+import string
 
 def GetMovieInfo(MovieDetails):
     # Gets the movie details be running pattern matches with regex
@@ -18,3 +20,16 @@ def GetDescription(description):
         return result
     else:
         return description
+
+
+
+SAFELOCK = "https://b1.safelock.pw:183/d/"
+
+def generateHash():
+    lowercase = string.ascii_lowercase
+    uppercase = string.ascii_uppercase  
+    numbers = "".join(str(i) for i in list(range(0, 10)))
+    final_list = lowercase + uppercase + numbers
+    hash = [ random.choice(final_list) for sel in range(7)]
+    print("".join(hash))
+
