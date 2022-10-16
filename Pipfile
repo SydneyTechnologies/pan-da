@@ -44,6 +44,7 @@ webdriver-manager = "==3.7.0"
 wsproto = "==1.1.0"
 django-rest-knox = "*"
 dj-database-url = "*"
+python-decouple = "*"
 
 [dev-packages]
 
