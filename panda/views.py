@@ -1,3 +1,4 @@
+from telnetlib import DO
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
@@ -7,7 +8,7 @@ from . customThreads import *
 from knox.models import AuthToken
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
-from . models import Links
+from . models import DownloadLinks
 from . utils import generateHash
 from rest_framework.generics import RetrieveAPIView
 from . serializers import LinkSerializer
@@ -85,11 +86,11 @@ def getMovie(request, link):
 def ShortenLink(link):
     original_link = link
     link_hash = generateHash()
-    Link = Links.objects.create(original_link, link_hash)
+    Link = DownloadLinks.objects.create(original_link, link_hash)
     return link_hash
 
 class RetrieveLinkView(RetrieveAPIView):
-    queryset = Links.objects.all()
+    queryset = DownloadLinks.objects.all()
     lookup_url_kwarg = "hash"
     serializer_class = LinkSerializer
 
