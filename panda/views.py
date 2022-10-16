@@ -86,7 +86,7 @@ def getMovie(request, link):
 def ShortenLink(link):
     original_link = link
     link_hash = generateHash()
-    Link = DownloadLinks.objects.create(original_link, link_hash)
+    Link = DownloadLinks.objects.create(original_link=original_link, hash_value=link_hash)
     return link_hash
 
 class RetrieveLinkView(RetrieveAPIView):

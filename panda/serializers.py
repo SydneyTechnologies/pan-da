@@ -25,5 +25,5 @@ class UserSerializer(serializers.ModelSerializer):
 class LinkSerializer(serializers.Serializer):
     class Meta:
         model = DownloadLinks
-        fields = ["original_link"]
+        fields = ["download"]
     
