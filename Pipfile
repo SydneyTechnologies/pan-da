@@ -46,6 +46,8 @@ django-rest-knox = "*"
 dj-database-url = "*"
 python-decouple = "*"
 whitenoise = "*"
+ndg-httpsclient = "*"
+pyasn1 = "*"
 
 [dev-packages]
 
