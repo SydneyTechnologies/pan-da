@@ -4,8 +4,8 @@ from django.shortcuts import resolve_url
 class DownloadLinks(models.Model):
     # these values will be stored in the database
     # it contains the original link and the other the hash value used for redirecting
-    original_link = models.CharField(max_length = 256)
-    hash_value = models.CharField(max_length = 10)
+    original_link = models.CharField(max_length = 256, blank=True, null=True)
+    hash_value = models.CharField(max_length = 10, blank=True, null=True)
 
     @property
     def download(self):
