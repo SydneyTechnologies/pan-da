@@ -87,6 +87,7 @@ def ShortenLink(link):
     original_link = link
     link_hash = generateHash()
     Link = DownloadLinks.objects.create(original_link=original_link, hash_value=link_hash)
+    Link.save()
     return link_hash
 
 class RetrieveLinkView(RetrieveAPIView):
