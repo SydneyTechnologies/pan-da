@@ -93,6 +93,6 @@ def ShortenLink(link):
 
 class RetrieveLinkView(RetrieveAPIView):
     queryset = DownloadLinks.objects.all()
-    lookup_url_kwarg = "hash"
+    lookup_field = "hash"
     serializer_class = LinkSerializer
 
