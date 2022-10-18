@@ -85,6 +85,7 @@ def getMovie(request, link):
 # Create your views here.
 def ShortenLink(link):
     original_link = link
+    print("f{original_link} is the original link")
     link_hash = generateHash()
     Link = DownloadLinks.objects.create(original_link=original_link, hash_value=link_hash)
     Link.save()
