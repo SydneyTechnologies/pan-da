@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from . models import DownloadLinks
 from . utils import generateHash
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 from . serializers import LinkSerializer
 from django.shortcuts import redirect
 
@@ -91,9 +91,9 @@ def ShortenLink(link):
     Link.save()
     return link_hash
 
-class RetrieveLinkView(RetrieveAPIView):
+class RetrieveLinkView(ListAPIView):
     queryset = DownloadLinks.objects.all()
-    lookup_field = "hash_value"
-    lookup_url_kwarg = "hash"
+    # lookup_field = "hash_value"
+    # lookup_url_kwarg = "hash"
     serializer_class = LinkSerializer
 
