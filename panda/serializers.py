@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-class LinkSerializer(serializers.Serializer):
+class LinkSerializer(serializers.ModelSerializer):
     class Meta:
         model = DownloadLinks
         fields = "__all__"
