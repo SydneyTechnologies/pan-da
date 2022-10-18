@@ -75,7 +75,7 @@ def getMovie(request, link):
     download_thread.start()
     download_thread.join()
     if download_thread.result != False:
-        hash_id = ShortenLink(download_thread.result)
+        hash_id = ShortenLink(download_thread.resul.getDownloadLink())
         return redirect("video", hash=hash_id)
         #Response({"download-link": download_thread.result.getDownloadLink()})
     else:
