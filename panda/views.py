@@ -13,6 +13,7 @@ from . utils import generateHash
 from rest_framework.generics import RetrieveAPIView, ListAPIView
 from . serializers import LinkSerializer
 from django.shortcuts import redirect
+from django.http import Http404
 
 
 # Create your views here.
@@ -63,7 +64,7 @@ def searchMovie(request, search):
         serializer = WatchableSerializer(watchables, many=True)
         return Response(serializer.data)
     else:
-        return Response({"status": "no results found"})
+        raise Http404
 
 
 @api_view(['GET'])
